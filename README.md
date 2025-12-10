@@ -1,4 +1,4 @@
-![Infosys-poster](images\Infosys-poster.png)
+![Infosys-poster](images/Infosys-poster.png)
 
 # ****Problem statement: Audio Analysis - Automated Podcast Transcription And Topic Segmentation****
 
