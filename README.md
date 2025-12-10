@@ -1,10 +1,12 @@
 ![Infosys-poster](images\Infosys-poster.png)
 
-# ***Problem statement: Audio Analysis - Automated Podcast Transcription And Topic Segmentation*** 
+# ****Problem statement: Audio Analysis - Automated Podcast Transcription And Topic Segmentation****
 
 **Name: Goutham Gourabathuni**
 
 **Mentor name: Resma Rani Nimalpuri**
+
+**Batch: 8,9 and 10**
 
 
 | **Date** | **Assignment** | **Illustration** | **Submission-docs** |
