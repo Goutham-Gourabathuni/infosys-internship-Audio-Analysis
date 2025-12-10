@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
 import uvicorn
-from typing import List
+from typing import List, Optional
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -31,7 +31,7 @@ class PredictionOutput(BaseModel):
     text: str
     prediction: int
     sentiment: str
-    confidence: float = None
+    confidence: Optional[float] = None
 
 class BatchPredictionOutput(BaseModel):
     predictions: List[PredictionOutput]
