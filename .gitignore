@@ -1,7 +1,3 @@
 .venv/
 difference.txt
-assignments/best_text_pipeline.joblib
-assignments/download_nltk_data.py
-assignments/sentiment_api.py
 images/
-ipynb-drafts/
