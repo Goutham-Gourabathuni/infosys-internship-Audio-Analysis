@@ -1,8 +1,9 @@
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
 import uvicorn
-from typing import List, Optional
+from typing import List
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -19,19 +20,19 @@ except Exception as e:
     print(f"Error loading model: {e}")
     model = None
 
-# Request models
+# Request model
 class TextInput(BaseModel):
     text: str
-    
+
 class BatchTextInput(BaseModel):
     texts: List[str]
 
-# Response models
+# Response model
 class PredictionOutput(BaseModel):
     text: str
     prediction: int
     sentiment: str
-    confidence: Optional[float] = None
+    confidence: float = None
 
 class BatchPredictionOutput(BaseModel):
     predictions: List[PredictionOutput]
@@ -49,19 +50,19 @@ def health_check():
 def predict_sentiment(input_data: TextInput):
     if model is None:
         raise HTTPException(status_code=500, detail="Model not loaded")
-    
+
     try:
         # Make prediction
         prediction = model.predict([input_data.text])[0]
-        
+
         # Get probability if available
         confidence = None
         if hasattr(model, 'predict_proba'):
             proba = model.predict_proba([input_data.text])[0]
             confidence = float(max(proba))
-        
+
         sentiment = "positive" if prediction == 1 else "negative"
-        
+
         return PredictionOutput(
             text=input_data.text,
             prediction=int(prediction),
@@ -76,16 +77,16 @@ def predict_sentiment(input_data: TextInput):
 def predict_batch(input_data: BatchTextInput):
     if model is None:
         raise HTTPException(status_code=500, detail="Model not loaded")
-    
+
     try:
         predictions = model.predict(input_data.texts)
-        
+
         # Get probabilities if available
         confidences = None
         if hasattr(model, 'predict_proba'):
             probas = model.predict_proba(input_data.texts)
             confidences = [float(max(p)) for p in probas]
-        
+
         results = []
         for i, (text, pred) in enumerate(zip(input_data.texts, predictions)):
             sentiment = "positive" if pred == 1 else "negative"
@@ -96,7 +97,7 @@ def predict_batch(input_data: BatchTextInput):
                 sentiment=sentiment,
                 confidence=confidence
             ))
-        
+
         return BatchPredictionOutput(predictions=results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
